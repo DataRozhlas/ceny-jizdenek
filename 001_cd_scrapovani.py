@@ -95,16 +95,17 @@ def cd(odkud, kam, pocet_dni=0):
 trasy = [
     ('Praha','Brno'),
     ('Brno','Praha'),
-    ('Praha','Ostrava'),
-    ('České Budějovice','Plzeň'),
-    ('Znojmo','Jihlava'),
+    ('Karlovy Vary','Ostrava'),
+    ('Slavonice','Plzeň'),
+    ('Ústí nad Labem','Vídeň'),
     ('Brno', 'Hamburg'),
-    ('Liberec','Salzburg'),
-    ('Olomouc','Przemysl')
+    ('Olomouc','Przemysl'),
+    ('Pardubice','Poprad')
 ]
 
 dny = [0,1,2,3,4,5,6,7] 
-dny.append(random.randint(8, 60)) ## Stahujeme celý následující týden + náhodné datum v příštích 2 měsících, takže jich za den získáme 24.
+dny.append(random.randint(8, 14))
+dny.append(random.randint(15, 60))
 
 for d in dny:
     for x in trasy:

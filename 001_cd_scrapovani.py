@@ -70,7 +70,7 @@ def cd(odkud, kam, pocet_dni=0):
 
         sleep(1)
         
-        with open(os.path.join(f"downloads/{datetime.now().strftime('%Y-%m-%d')}",f"cd_{odkud}_{kam}_D{pocet_dni:02}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.txt"), "w+", encoding="utf-8") as ven:
+        with open(os.path.join(f"downloads/{datetime.now().strftime('%Y-%m-%d')}",f"cd_{odkud}_{kam}_D{pocet_dni:02}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.html"), "w+", encoding="utf-8") as ven:
             ven.write(driver.page_source)
         
         print("Výstup uložen.")
@@ -93,12 +93,12 @@ def cd(odkud, kam, pocet_dni=0):
                 print(f"Projáníčka, propáníčka, pro ztracené korále – máme všichni namále: {e}.")
 
 trasy = [
-    ('Praha','Brno'),
-    ('Brno','Praha'),
+    ('Praha hl.n','Brno hl.n.'),
+    ('Brno hl.n.','Praha hl.n'),
     ('Karlovy Vary','Ostrava'),
     ('Slavonice','Plzeň'),
     ('Ústí nad Labem','Vídeň'),
-    ('Brno', 'Hamburg'),
+    ('Brno hl.n.', 'Hamburg'),
     ('Olomouc','Przemysl'),
     ('Pardubice','Poprad')
 ]
@@ -106,6 +106,8 @@ trasy = [
 dny = [0,1,2,3,4,5,6,7] 
 dny.append(random.randint(8, 14))
 dny.append(random.randint(15, 60))
+
+sleep(random.randint(0, 4500))
 
 for d in dny:
     for x in trasy:

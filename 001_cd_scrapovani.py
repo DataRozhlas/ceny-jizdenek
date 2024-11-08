@@ -154,7 +154,7 @@ trasy_c = [
 random.shuffle(trasy_b)
 random.shuffle(trasy_c)
 
-trasy = trasy_a + trasy_b[0:2] + trasy_c[0]
+trasy = trasy_a + trasy_b[0:2] + [trasy_c[0]]
 
 dny = [0, 1, 2, 3, 4]
 dny.append(random.randint(5, 7))

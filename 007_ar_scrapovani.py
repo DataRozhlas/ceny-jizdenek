@@ -44,23 +44,23 @@ def arriva(odkud, kam):
         from_input.clear()
         from_input.send_keys(odkud)
         print("Odkud vyplněno.")
-        sleep(3)
+        sleep(2)
         from_input.send_keys(Keys.TAB)
-        sleep(3)
+        sleep(2)
         to_input = wait.until(
             EC.presence_of_element_located((By.CLASS_NAME, "suggest-input-to"))
         )
         to_input.send_keys(kam)
         print("Kam vyplněno")
-        sleep(3)
+        sleep(2)
         to_input.send_keys(Keys.TAB)
-        sleep(3)
+        sleep(2)
 
         submit_button = wait.until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "[type='submit']"))
         )
 
-        sleep(3)
+        sleep(2)
         submit_button.click()
 
         print("Odkliknuto.")
@@ -104,6 +104,7 @@ trasy = [
 ]
 
 random.shuffle(trasy)
+trasy = trasy[0:2]
 
 for t in trasy:
     arriva(t[0], t[1])

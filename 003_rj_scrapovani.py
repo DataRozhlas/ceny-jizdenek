@@ -60,7 +60,7 @@ def regiojet(odkud, kam, pocet_dni=0):
 
         pole1.send_keys(Keys.ENTER)
 
-        sleep(random.randint(4, 6))
+        sleep(random.randint(4, 5))
         pole2 = wait.until(
         EC.presence_of_element_located((By.CSS_SELECTOR, "[aria-label='Kam']"))
         )
@@ -68,9 +68,9 @@ def regiojet(odkud, kam, pocet_dni=0):
         print("Vyťukávám KAM.")
 
         pole2.send_keys(kam)
-        sleep(random.randint(3, 5))
+        sleep(random.randint(3, 4))
         pole2.send_keys(Keys.ENTER)
-        sleep(random.randint(3, 5))
+        sleep(random.randint(3, 4))
 
         print("Posílám druhý ENTER.")
 
@@ -78,7 +78,7 @@ def regiojet(odkud, kam, pocet_dni=0):
 
         wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
 
-        sleep(random.randint(3, 5))
+        sleep(random.randint(3, 4))
 
         uloz_stranku(pocet_dni=0)
 
@@ -110,8 +110,10 @@ def regiojet(odkud, kam, pocet_dni=0):
             except Exception as e:
                 print(e)
 
-trasy = [
-     ('Praha','Brno'),
+trasy_a = [('Praha','Brno'),
+           ('Praha','Ostrava')]
+
+trasy_b = [
      ('Olomouc','Przemysl'),
      ('Kolín','Ústí nad Labem'),
      ('Ostrava','Brno'),
@@ -119,10 +121,14 @@ trasy = [
      ('Praha','Budapešť'),
      ('Praha','Košice'),
      ('Praha','Čop'),
+     ('Praha','Vídeň'),
+     ('Praha','Bratislava'),
+     ('Praha','Krakov')
 ]
 
+random.shuffle(trasy_b)
+trasy = trasy_a + trasy_b[:3]
 random.shuffle(trasy)
-trasy = trasy[:-3]
 
 for t in trasy:
     regiojet(t[0],t[1])

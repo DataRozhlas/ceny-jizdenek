@@ -124,6 +124,7 @@ def cd(odkud, kam, pocet_dni=0):
                     f"Projáníčka, propáníčka, pro ztracené korále – máme všichni namále: {e}."
                 )
 
+
 trasy_a = [("Praha", "Brno"), ("Praha", "Ostrava")]
 
 trasy_b = [
@@ -132,7 +133,7 @@ trasy_b = [
     ("Praha", "Budapešť"),
     ("Praha", "Vídeň"),
     ("Praha", "Bratislava"),
-    ("Praha", "Varšava")
+    ("Praha", "Varšava"),
 ]
 
 trasy_c = [
@@ -149,7 +150,7 @@ trasy_c = [
     ("Praha", "Záhřeb"),
     ("Praha", "Lublaň"),
     ("Praha", "Amsterdam"),
-    ("Praha","Krakow")
+    ("Praha", "Krakow"),
 ]
 
 random.shuffle(trasy_b)
@@ -157,10 +158,10 @@ random.shuffle(trasy_c)
 
 trasy = trasy_a + trasy_b[0:2] + [trasy_c[0]]
 
-dny = [0, 1, 2, 3, 4]
-dny.append(random.randint(5, 7))
-dny.append(random.randint(8, 10))
-dny.append(random.randint(11, 15))
+dny = [0, 1, 2, 3]
+dny.append(random.randint(4, 5))
+dny.append(random.randint(6, 7))
+dny.append(random.randint(8, 15))
 dny.append(random.randint(16, 30))
 dny.append(random.randint(31, 90))
 

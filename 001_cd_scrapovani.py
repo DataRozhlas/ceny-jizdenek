@@ -151,6 +151,7 @@ trasy_c = [
     ("Praha", "Lublaň"),
     ("Praha", "Amsterdam"),
     ("Praha", "Krakow"),
+#    ("Praha","Vratislav")
 ]
 
 random.shuffle(trasy_b)

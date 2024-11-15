@@ -1,0 +1,105 @@
+def oscrapuj_cd(slozka, soubor):
+    # Pre-compile regular expressions for better performance
+    date_pattern = re.compile(r'\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}')
+    time_pattern = re.compile(r'\d{1,2}:\d\d')
+    
+    with open(os.path.join(slozka, soubor), "r", encoding="utf-8") as file:
+        raw_html = file.read()
+
+    # Extract date once instead of per iteration
+    oscrapovano = date_pattern.search(soubor).group(0)
+    oscrapovano_dt = datetime.strptime(oscrapovano, "%Y-%m-%d_%H-%M-%S")
+    
+    # Split only once and store results
+    spojeni = raw_html.split("<article")[1:]
+    
+    # Define common strings as constants to avoid string creation in loop
+    COMMON_STRINGS = {
+        'to_train': 'text: to(lastTrain($index()))',
+        'from_train': 'text: from(firstTrain($index()))',
+        'journey_date': 'text: journeyDateTextFrom()',
+        'dep_time': 'text: depTime(firstTrain($index()))',
+        'buy_button': 'text: buyButtonText()',
+        'train_type': 'text: model.trainTypeAndNum',
+        'occupancy': '<span aria-hidden="true" data-bind="visible: occupancyLevelFull(), text: occupancyLevelText()"',
+        'time_length': '<span data-bind="text: timeLength, visible: timeLength != null &amp;&amp; timeLength != \'\'"',
+        'distance': '<span data-bind="text: distance, visible: distance != null &amp;&amp; distance != \'"',
+        'delay': '<span aria-hidden="true" data-bind="text: delayText()">'
+    }
+    
+    slovniky = []
+    
+    for s in spojeni:
+        # Initialize dictionary with default values
+        slovnik = {
+            'prodejce': "ČD",
+            'vlaky': [],
+            'obsazenost': [],
+            'zpozdeni': [],
+            'oscrapovano': oscrapovano_dt,
+            'prostredek': 'vlak'
+        }
+        
+        lines = s.splitlines()
+        den = None
+        cas_odjezdu = None
+        
+        for radek in lines:
+            # Use dictionary lookup instead of multiple if statements
+            if COMMON_STRINGS['to_train'] in radek:
+                slovnik['kam'] = radek.split('>')[-2].split('<')[0]
+            elif COMMON_STRINGS['from_train'] in radek:
+                slovnik['odkud'] = radek.split('>')[-2].split('<')[0]
+            elif COMMON_STRINGS['journey_date'] in radek and not den:
+                den = radek.split('>')[-2].split('<')[0]
+            elif COMMON_STRINGS['dep_time'] in radek:
+                cas_odjezdu = time_pattern.search(radek).group(0)
+            elif COMMON_STRINGS['buy_button'] in radek:
+                cena = radek.split('-->')[1].split('<!--')[0].replace(" Kč","")
+                try:
+                    slovnik['cena'] = int(cena)
+                except ValueError:
+                    pass
+            elif COMMON_STRINGS['train_type'] in radek:
+                vlak = radek.split('-->')[1].split('<!--')[0]
+                if vlak not in slovnik['vlaky']:
+                    slovnik['vlaky'].append(vlak)
+            elif COMMON_STRINGS['occupancy'] in radek:
+                slovnik['obsazenost'].append(radek.split('>')[-2].split('<')[0])
+            elif COMMON_STRINGS['time_length'] in radek:
+                jizdni_doba = radek.split('>')[-2].split('<')[0].split(":")
+                slovnik['jizdni_doba'] = (int(jizdni_doba[0]) * 60) + int(jizdni_doba[1][:2])
+            elif COMMON_STRINGS['distance'] in radek:
+                try:
+                    slovnik['vzdalenost'] = int(radek.split('>')[-2].split('<')[0].replace(" km",""))
+                except ValueError:
+                    pass
+            elif "Náhradní autobusová doprava" in radek:
+                slovnik['nahradni_bus'] = True
+            elif COMMON_STRINGS['delay'] in radek:
+                if "+" in radek:
+                    try:
+                        slovnik['zpozdeni'].append(int(radek.split('+')[1].strip().split(' ')[0]))
+                    except ValueError:
+                        slovnik['zpozdeni'].append('chyba')
+                elif "><" in radek:
+                    slovnik['zpozdeni'].append(0)
+            elif "Místenka zdarma" in radek:
+                slovnik['mistenka_zdarma'] = True
+                
+        if den and cas_odjezdu:
+            slovnik['den'] = den.split(' ')[0].lower().strip()
+            date_str = '-'.join(den.split(' ')[1].split('.')[::-1])
+            slovnik['odjezd'] = datetime.strptime(f"{date_str} {cas_odjezdu}", "%Y-%m-%d %H:%M")
+            slovnik['predstih'] = slovnik['odjezd'] - slovnik['oscrapovano']
+        
+        # Post-processing
+        if len(slovnik['vlaky']) == 1 and slovnik['obsazenost']:
+            slovnik['obsazenost'] = [slovnik['obsazenost'][0]]
+        
+        slovnik['zpozdeni'] = slovnik['zpozdeni'][1::2]
+        slovnik['prestupy'] = len(slovnik['vlaky']) - 1
+        
+        slovniky.append(slovnik)
+    
+    return [x for x in slovniky if x]

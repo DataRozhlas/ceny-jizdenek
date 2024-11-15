@@ -2,13 +2,12 @@ Skripty sbírají data z webů vlakových dopravců (ČD, RegioJet, Arriva, Leo 
 
 Použití:
 
-- Soubor ```data/jizdenky.parquet``` obsahuje téměř kompletní posbíraná data. Pozor při jejich interpretaci! Jsou postahovaná v předem určených časech a na předem určených trasách (sledujeme především přepravu mezi velkými městy), nezahrnují ani základní slevy, jednotliví dopravci mají různé metriky plnosti (slovní popis, přesná cifra, přesná cifra pod 20 volných míst), občas se tam zamíchá jiná trasa než hledaná atd.
+- Soubor ```data/jizdenky.parquet``` obsahuje téměř kompletní posbíraná data. Pozor při jejich interpretaci! Jsou postahovaná v předem určených časech a na předem určených trasách (sledujeme především přepravu mezi velkými městy), nezahrnují ani základní slevy, jednotliví dopravci mají různé metriky obsazenosti (slovní popis, přesná cifra, přesná cifra pod 20 volných míst), občas se tam zamíchá jiná trasa než hledaná atd. Navíc se ve sledovaném časovém okně (sběr dat začal v listopadu 2024 a pokračuje do začátku roku 2025) mění jízdní řady a s ním i ceny.
 - Soubor ```data/jizdenky_tyden.csv``` filtruje spojení oscrapovaná v posledních 168 hodinách (ve smyslu před ruční aktualizací dat a repozitáře) pro rychlejší a jednodušší exploraci. Výše uvedené vykřičníky platí i zde.
 
 To-do programovací:
 
 - Průběžně scrapovat stažené stránky a mazat originály (jsou mega velké).
-- Nescrapovat vše odznova, jen chybějící/nedokončené dny.
 - Přidat OneTicket.
 
 To-do badatelské:

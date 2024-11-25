@@ -13,7 +13,6 @@ from pyvirtualdisplay import Display
 kam = f"downloads/{datetime.now().strftime('%Y-%m-%d')}"
 os.makedirs(kam, exist_ok=True)
 
-
 def cd(odkud, kam, pocet_dni=0):
 
     print(f"{odkud}-{kam} {pocet_dni} d")
@@ -91,7 +90,7 @@ def cd(odkud, kam, pocet_dni=0):
 
         with open(
             os.path.join(
-                f"downloads/{datetime.now().strftime('%Y-%m-%d')}",
+                kam,
                 f"cd_{odkud}_{kam}_D{pocet_dni:02}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.html",
             ),
             "w+",
@@ -141,17 +140,17 @@ trasy_c = [
     ("Slavonice", "Plzeň"),
     ("Ústí nad Labem", "Dresden"),
     ("Brno", "Hamburg"),
-    ("Brno", "Ljubljana"),
+    # ("Brno", "Ljubljana"),
     ("Olomouc", "Przemysl"),
-    ("Ostrava", "Gdaňsk"),
+    # ("Ostrava", "Gdaňsk"),
     ("Pardubice", "Košice"),
     ("Praha", "Bern"),
-    ("České Budějovice", "Zürich"),
     ("Praha", "Záhřeb"),
     ("Praha", "Lublaň"),
     ("Praha", "Amsterdam"),
     ("Praha", "Krakow"),
-#    ("Praha","Vratislav")
+    ("Praha","Gdansk"),
+    ("Praha","Vratislav")
 ]
 
 random.shuffle(trasy_b)

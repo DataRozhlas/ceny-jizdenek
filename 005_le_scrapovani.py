@@ -93,7 +93,6 @@ odstup.append(random.randint(4, 7))
 odstup.append(random.randint(8, 15))
 odstup.append(random.randint(16, 30))
 odstup.append(random.randint(31, 90))
-odstup
 
 trasy = [
     (['5457076','Praha'],['OSTRAVA','Ostrava'])

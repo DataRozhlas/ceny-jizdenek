@@ -161,7 +161,7 @@ trasy = trasy_a + trasy_b[0:2] + [trasy_c[0]]
 dny = [0, 1, 2, 3]
 dny.append(random.randint(4, 5))
 dny.append(random.randint(6, 7))
-dny.append(random.randint(8, 15))
+dny.append(random.randint(31, 90))
 dny.append(random.randint(16, 30))
 dny.append(random.randint(31, 90))
 

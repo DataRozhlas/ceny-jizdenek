@@ -10,8 +10,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pyvirtualdisplay import Display
 
-kam = f"downloads/{datetime.now().strftime('%Y-%m-%d')}"
-os.makedirs(kam, exist_ok=True)
+slozka_kam = f"downloads/{datetime.now().strftime('%Y-%m-%d')}"
+os.makedirs(slozka_kam, exist_ok=True)
 
 def cd(odkud, kam, pocet_dni=0):
 
@@ -90,7 +90,7 @@ def cd(odkud, kam, pocet_dni=0):
 
         with open(
             os.path.join(
-                kam,
+                slozka_kam,
                 f"cd_{odkud}_{kam}_D{pocet_dni:02}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.html",
             ),
             "w+",

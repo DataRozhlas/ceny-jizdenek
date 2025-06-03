@@ -104,7 +104,7 @@ trasy = [
 ]
 
 random.shuffle(trasy)
-trasy = trasy[0:2]
+trasy = trasy[0]
 
 for t in trasy:
     arriva(t[0], t[1])

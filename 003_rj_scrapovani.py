@@ -87,12 +87,14 @@ def regiojet(odkud, kam, pocet_dni=0):
             driver.execute_script(
                 """document.querySelectorAll('.max-h-screen').forEach(element => element.style.display = 'none');"""
             )
-            dalsi =  driver.find_element(By.XPATH, "//button[text()='Další spoje']")
+            
+            dalsi = driver.find_element(By.XPATH, "//button[text()='Další spoje']")
             sleep(random.randint(3, 6))
-            
+        
             print("Klikám na další spojení.")
-            
+        
             dalsi.click()
+
             uloz_stranku(pocet_dni=den)
 
     except Exception as e:
@@ -127,7 +129,7 @@ trasy_b = [
 ]
 
 random.shuffle(trasy_b)
-trasy = trasy_a + trasy_b[:3]
+trasy = trasy_a + trasy_b[:5]
 random.shuffle(trasy)
 
 for t in trasy:

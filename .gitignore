@@ -3,6 +3,7 @@ data_raw/
 .ipynb_checkpoints/
 pokus.txt
 pokusy
+jizdenky.parquet
 cd_*.parquet
 ar_*.parquet
 le_*.parquet

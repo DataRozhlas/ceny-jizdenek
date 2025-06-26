@@ -14,26 +14,25 @@ from pyvirtualdisplay import Display
 kam = f"downloads/{datetime.now().strftime('%Y-%m-%d')}"
 os.makedirs(kam, exist_ok=True)
 
+
 def regiojet(odkud, kam, pocet_dni=0):
-
     def uloz_stranku(pocet_dni):
-            with open(
-                os.path.join(
-                    f"downloads/{datetime.now().strftime('%Y-%m-%d')}",
-                    f"rj_{odkud}_{kam}_D{pocet_dni:02}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.html",
-                ),
-                "w+",
-                encoding="utf-8",
-            ) as ven:
-                ven.write(driver.page_source)
+        with open(
+            os.path.join(
+                f"downloads/{datetime.now().strftime('%Y-%m-%d')}",
+                f"rj_{odkud}_{kam}_D{pocet_dni:02}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.html",
+            ),
+            "w+",
+            encoding="utf-8",
+        ) as ven:
+            ven.write(driver.page_source)
 
-            print(f"Uloženo: {odkud}-{kam} {pocet_dni} D")
+        print(f"Uloženo: {odkud}-{kam} {pocet_dni} D")
 
     try:
-
         display = Display(visible=0, size=(1920, 1080))
         display.start()
-        
+
         print("Startuji.")
 
         driver = webdriver.Firefox(executable_path="/usr/local/bin/geckodriver")
@@ -62,7 +61,7 @@ def regiojet(odkud, kam, pocet_dni=0):
 
         sleep(random.randint(4, 5))
         pole2 = wait.until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, "[aria-label='Kam']"))
+            EC.presence_of_element_located((By.CSS_SELECTOR, "[aria-label='Kam']"))
         )
 
         print("Vyťukávám KAM.")
@@ -83,16 +82,15 @@ def regiojet(odkud, kam, pocet_dni=0):
         uloz_stranku(pocet_dni=0)
 
         for den in range(1, 60):
-                            
             driver.execute_script(
                 """document.querySelectorAll('.max-h-screen').forEach(element => element.style.display = 'none');"""
             )
-            
+
             dalsi = driver.find_element(By.XPATH, "//button[text()='Další spoje']")
             sleep(random.randint(3, 6))
-        
+
             print("Klikám na další spojení.")
-        
+
             dalsi.click()
 
             uloz_stranku(pocet_dni=den)
@@ -112,20 +110,20 @@ def regiojet(odkud, kam, pocet_dni=0):
             except Exception as e:
                 print(e)
 
-trasy_a = [('Praha','Brno'),
-           ('Praha','Ostrava')]
+
+trasy_a = [("Praha", "Brno"), ("Praha", "Ostrava")]
 
 trasy_b = [
-     ('Olomouc','Przemysl'),
-     ('Kolín','Ústí nad Labem'),
-     ('Ostrava','Brno'),
-     ('Brno','Vídeň'),
-     ('Praha','Budapešť'),
-     ('Praha','Košice'),
-     ('Praha','Čop'),
-     ('Praha','Vídeň'),
-     ('Praha','Bratislava'),
-     ('Praha','Krakov')
+    ("Olomouc", "Przemysl"),
+    ("Kolín", "Ústí nad Labem"),
+    ("Ostrava", "Brno"),
+    ("Brno", "Vídeň"),
+    ("Praha", "Budapešť"),
+    ("Praha", "Košice"),
+    ("Praha", "Čop"),
+    ("Praha", "Vídeň"),
+    ("Praha", "Bratislava"),
+    ("Praha", "Krakov"),
 ]
 
 random.shuffle(trasy_b)
@@ -133,5 +131,5 @@ trasy = trasy_a + trasy_b[:5]
 random.shuffle(trasy)
 
 for t in trasy:
-    regiojet(t[0],t[1])
-    regiojet(t[1],t[0])
+    regiojet(t[0], t[1])
+    regiojet(t[1], t[0])
